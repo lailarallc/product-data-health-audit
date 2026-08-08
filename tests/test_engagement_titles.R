@@ -84,5 +84,24 @@ assert("tearsheet + subtitle also client-clean",
        !grepl("Cinderhaven", paste(tn$tearsheet_title, tn$report_subtitle),
               fixed = TRUE))
 
+cat("\n--- the SHIPPED engagement.demo.yml renders through the real loader ---\n")
+# Coverage gap the 0.d break exposed: every fixture above builds config_raw by hand,
+# so none exercised load_engagement() on the ACTUAL demo config — whose top-level
+# report_date key (and no report: block) made R's $ partial-match `report` ->
+# `report_date`, so rpt became an atomic string and the render crashed. This loads the
+# real engagement.demo.yml (the exact path the write_variables.R pre-render takes) and
+# asserts the golden subtitle. Load it EXPLICITLY so a stray engagement.yml in the
+# working clone can't shadow it (the source of the earlier "Northwind" artifact).
+old_cfg <- Sys.getenv("ENGAGEMENT_CONFIG", unset = NA)
+Sys.setenv(ENGAGEMENT_CONFIG = file.path(ROOT, "engagement.demo.yml"))
+demo_cfg_eng <- load_engagement(ROOT)
+if (is.na(old_cfg)) Sys.unsetenv("ENGAGEMENT_CONFIG") else Sys.setenv(ENGAGEMENT_CONFIG = old_cfg)
+
+assert("real demo config loads as a demo", isTRUE(demo_cfg_eng$is_demo))
+assert("real demo config: data_as_of and report_date are distinct (0.d split)",
+       !identical(demo_cfg_eng$data_as_of, demo_cfg_eng$report_date))
+assert("real demo config: compose_titles subtitle matches golden bytes",
+       same_bytes(compose_titles(demo_cfg_eng)$report_subtitle, gold_subtitle))
+
 cat(sprintf("\n%d passed, %d failed\n", pass, fail))
 if (fail > 0) stop("Tests failed.")
