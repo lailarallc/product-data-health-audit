@@ -122,6 +122,27 @@ if (!nzchar(quarto_exe)) {
   # evaluates R chunks once and produces both outputs in a single pass.
   render_qmd("quarto/report.qmd",    NA, "report.html")
 
+  # ---- Render check: the report date must be REAL metadata -----------------
+  # A {{< var >}} shortcode in the typed `date` field degrades silently to
+  # "Invalid Date" and drops the dcterms.date meta tag — a defect no unit test
+  # can catch because it only exists in rendered HTML. Fail the pipeline loudly
+  # if it ever regresses. (0.d date-metadata regression.)
+  report_html <- file.path(ROOT, "quarto", "report.html")
+  if (!file.exists(report_html)) {
+    stop("report.html not produced — cannot verify date metadata.", call. = FALSE)
+  }
+  html <- paste(readLines(report_html, warn = FALSE, encoding = "UTF-8"),
+                collapse = "\n")
+  has_date_meta <- grepl('name="dcterms.date"', html, fixed = TRUE)
+  has_bad_date  <- grepl("Invalid Date", html, fixed = TRUE)
+  if (!has_date_meta || has_bad_date) {
+    stop(sprintf(
+      "report.html date regression: dcterms.date meta %s; \"Invalid Date\" %s.",
+      if (has_date_meta) "present" else "MISSING",
+      if (has_bad_date)  "PRESENT" else "absent"), call. = FALSE)
+  }
+  cat("  date metadata OK (dcterms.date present, no \"Invalid Date\")\n")
+
   step_banner("Quarto render — quarto/dashboard.qmd")
   render_qmd("quarto/dashboard.qmd", NA, "dashboard.html")
 
