@@ -39,32 +39,39 @@ load_engagement <- function(root = "..") {
   # mode with empty client names — see PDHA-RENDER-VERIFICATION.md P1).
   if (is.null(y) || !is.list(y))
     stop("engagement config did not parse as a mapping: ", path, call. = FALSE)
-  client_name <- y$client$name
+  client_name <- y[["client"]][["name"]]
   if (is.null(client_name) || !is.character(client_name) ||
       length(client_name) != 1 || !nzchar(trimws(client_name)))
     stop("engagement config has no non-empty client$name: ", path, call. = FALSE)
-  if (!("demo" %in% names(y)) || !is.logical(y$demo) ||
-      length(y$demo) != 1 || is.na(y$demo))
+  if (!("demo" %in% names(y)) || !is.logical(y[["demo"]]) ||
+      length(y[["demo"]]) != 1 || is.na(y[["demo"]]))
     stop("engagement config must set 'demo:' to true or false (a bare logical): ",
          path, call. = FALSE)
 
   final_env <- tolower(Sys.getenv("ENGAGEMENT_FINAL", unset = "false"))
   list(
     source_path   = path,
-    client_name   = y$client$name,
-    client_short  = y$client$short_name %||% y$client$name,
-    revenue_desc  = y$client$revenue_description %||% "",
-    engagement_id = y$engagement$id %||% "",
-    as_of_date    = as.character(y$as_of_date),
-    prepared_by   = y$prepared_by %||% "Lailara LLC",
-    is_demo       = isTRUE(y$demo),
+    client_name   = y[["client"]][["name"]],
+    client_short  = y[["client"]][["short_name"]] %||% y[["client"]][["name"]],
+    revenue_desc  = y[["client"]][["revenue_description"]] %||% "",
+    engagement_id = y[["engagement"]][["id"]] %||% "",
+    # Date split (0.d): data_as_of = data-window end; report_date = authoring date.
+    # An old config that sets only as_of_date (conflated) has both fall back to it, so
+    # it still renders exactly as before. Read config with [[ ]] not $: R's $
+    # partial-matches list names, so a new top-level key that is a prefix of an older
+    # read (report_date vs a report$ access) would resolve silently and wrongly.
+    data_as_of    = as.character(y[["data_as_of"]] %||% y[["as_of_date"]]),
+    report_date   = as.character(y[["report_date"]] %||% y[["as_of_date"]]),
+    as_of_date    = as.character(y[["as_of_date"]] %||% y[["data_as_of"]]),
+    prepared_by   = y[["prepared_by"]] %||% "Lailara LLC",
+    is_demo       = isTRUE(y[["demo"]]),
     is_final      = final_env %in% c("true", "1", "yes"),
-    retailers     = unlist(y$retailers) %||% character(0),
-    trade_spend_proxy = y$rates$trade_spend_proxy %||% list(),
-    margin_basis  = y$basis$margin %||% "contribution",
-    scan_basis    = y$basis$scan_basis %||% "retail",
-    window_months = y$basis$window_months %||% NA_integer_,
-    window_label  = y$basis$window_label %||% "",
+    retailers     = unlist(y[["retailers"]]) %||% character(0),
+    trade_spend_proxy = y[["rates"]][["trade_spend_proxy"]] %||% list(),
+    margin_basis  = y[["basis"]][["margin"]] %||% "contribution",
+    scan_basis    = y[["basis"]][["scan_basis"]] %||% "retail",
+    window_months = y[["basis"]][["window_months"]] %||% NA_integer_,
+    window_label  = y[["basis"]][["window_label"]] %||% "",
     config_raw    = y
   )
 }
@@ -81,7 +88,10 @@ compose_titles <- function(eng) {
   dot <- "\u00b7"  # middle dot via \u escape so byte output is encoding-independent
   months <- c("January", "February", "March", "April", "May", "June", "July",
               "August", "September", "October", "November", "December")
-  d <- tryCatch(as.Date(eng$as_of_date), error = function(e) as.Date(NA))
+  # Subtitle month-year is DOCUMENT IDENTITY = the report/authoring date, NOT the data
+  # window end. Do NOT "fix" this to data_as_of: that would relabel the deliverable's
+  # identity with the data date and move the byte-golden. (0.d split; Shawn's call.)
+  d <- tryCatch(as.Date(eng$report_date %||% eng$as_of_date), error = function(e) as.Date(NA))
   month_year <- if (!is.na(d))
     paste(months[as.integer(format(d, "%m"))], format(d, "%Y")) else ""
 
@@ -91,14 +101,18 @@ compose_titles <- function(eng) {
     tearsheet_title = paste0(eng$client_name, " ", dot, " Product Data Readiness")
   )
 
-  rpt <- eng$config_raw$report
+  # [[ ]] not $: R's $ partial-matches list names, so with no `report:` block
+  # eng$config_raw$report silently resolved the 0.d `report_date` key and crashed the
+  # render (rpt became the atomic "2026-05-03"). Guard: a non-list report -> no overrides.
+  rpt <- eng$config_raw[["report"]]
+  if (!is.list(rpt)) rpt <- list()
   override <- function(val, default)
     if (is.null(val) || !is.character(val) || !nzchar(val)) default else val
 
   list(
-    report_subtitle = override(rpt$subtitle,        defaults$report_subtitle),
-    dashboard_title = override(rpt$dashboard_title, defaults$dashboard_title),
-    tearsheet_title = override(rpt$tearsheet_title, defaults$tearsheet_title)
+    report_subtitle = override(rpt[["subtitle"]],        defaults$report_subtitle),
+    dashboard_title = override(rpt[["dashboard_title"]], defaults$dashboard_title),
+    tearsheet_title = override(rpt[["tearsheet_title"]], defaults$tearsheet_title)
   )
 }
 
@@ -129,7 +143,7 @@ eng_provenance_md <- function(eng, tool, version, root = "..") {
     "::: {.provenance-footer}\n",
     "**Provenance.** ", tool, " v", version, " · ",
     eng$client_name, " (", eng$engagement_id, ") · ",
-    "as-of ", eng$as_of_date, " · ",
+    "data as-of ", eng$data_as_of, " · report ", eng$report_date, " · ",
     "config ", config_hash, " · ",
     "margin basis: ", eng$margin_basis, " · ",
     "window: ", eng$window_label, " · ",
@@ -167,7 +181,7 @@ eng_watermark_md <- function(eng) {
   paste0(
     "::: {.draft-banner}\n",
     "**DRAFT — not for distribution.** Prepared for ", eng$client_name,
-    " (", eng$engagement_id, "), as-of ", eng$as_of_date,
+    " (", eng$engagement_id, "), report date ", eng$report_date %||% eng$as_of_date,
     ". Rebuild with `ENGAGEMENT_FINAL=true` for the final deliverable.\n",
     ":::\n")
 }

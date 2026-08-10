@@ -2,7 +2,13 @@
 title: "Product Data Readiness Audit"
 subtitle: "{{< var report_subtitle >}}"
 author: "Shawn Phillips | Lailara LLC"
-date: "2026-05-03"
+# `date` is a TYPED field: Quarto parses it before {{< var >}} content shortcodes
+# resolve, so a shortcode here lands as a literal string -> "Invalid Date" and no
+# dcterms.date meta. knitr evaluates this inline R in the front matter (before
+# pandoc reads metadata), substituting the literal report_date the write_variables.R
+# pre-render writes to _variables.yml. (Subtitle above stays a shortcode: it's free
+# text, not a typed field, so it survives the late resolution.)
+date: "`r yaml::read_yaml('_variables.yml')[['report_date']]`"
 format:
   html:
     toc: true
