@@ -1,0 +1,27 @@
+name: Deploy Data Debt Calculator to Fly
+
+# The Shiny calculator (shiny/, Fly app data-debt-calculator, calculator.lailarallc.com)
+# had NO CI — it was deployed by hand, so a git push published nothing and the
+# live app could silently drift from main. This gives it a deploy on push, matching
+# the fleet Fly pattern. render.yml deploys the SEPARATE audit Pages surface.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "shiny/**"
+      - ".github/workflows/calculator-deploy.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Shiny app to Fly
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: flyctl deploy
+        working-directory: shiny
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

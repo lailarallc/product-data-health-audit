@@ -231,6 +231,23 @@ ui <- page_navbar(
   lang = "en",
   navbar_options = navbar_options(bg = PAL$canvas, underline = TRUE),
   header = tags$header(
+    # Open Graph / Twitter card metadata. tags$head() is hoisted by
+    # htmltools into the server-rendered <head> so crawlers see it.
+    tags$head(
+      tags$meta(name = "description", content = "Estimate your product data debt from five inputs: sensitivity analysis, compliance timeline, and a cost-of-delay curve."),
+      tags$meta(property = "og:title", content = "Data Debt Calculator"),
+      tags$meta(property = "og:description", content = "Estimate your product data debt from five inputs: sensitivity analysis, compliance timeline, and a cost-of-delay curve."),
+      tags$meta(property = "og:type", content = "website"),
+      tags$meta(property = "og:url", content = "https://calculator.lailarallc.com/"),
+      tags$meta(property = "og:image", content = "https://lailarallc.com/og/s/calculator.png"),
+      tags$meta(property = "og:image:secure_url", content = "https://lailarallc.com/og/s/calculator.png"),
+      tags$meta(property = "og:image:type", content = "image/png"),
+      tags$meta(property = "og:image:width", content = "1200"),
+      tags$meta(property = "og:image:height", content = "630"),
+      tags$meta(property = "og:image:alt", content = "Data Debt Calculator"),
+      tags$meta(name = "twitter:card", content = "summary_large_image"),
+      tags$meta(name = "twitter:image", content = "https://lailarallc.com/og/s/calculator.png")
+    ),
     tags$style(HTML("
       .navbar { padding-top: 0.4rem; padding-bottom: 0.4rem;
                 background-color: #f5f3ee !important;
