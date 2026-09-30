@@ -43,7 +43,7 @@ The Shiny calculator runs separately: `Rscript -e "shiny::runApp('shiny/')"`.
 
 ```bash
 flyctl proxy 5434 -a cinderhaven-db          # in another terminal
-POSTGRES_PASSWORD=... python scripts/export_from_postgres.py
+ALLOW_PROD_DB=1 POSTGRES_PASSWORD=... python scripts/export_from_postgres.py
 Rscript R/run_all.R
 ```
 
