@@ -12,7 +12,7 @@ The export does the raw-to-mart transformation that dbt previously handled:
 
 Usage:
     flyctl proxy 5434 -a cinderhaven-db  # in another terminal
-    POSTGRES_PASSWORD=... python scripts/export_from_postgres.py
+    ALLOW_PROD_DB=1 POSTGRES_PASSWORD=... python scripts/export_from_postgres.py
 """
 from __future__ import annotations
 
@@ -23,6 +23,8 @@ from decimal import Decimal
 from pathlib import Path
 
 import psycopg2
+
+import prod_guard
 
 PGPORT = os.environ.get("PGPORT", "5434")
 PGPASS = os.environ.get("POSTGRES_PASSWORD", "")
@@ -158,6 +160,7 @@ def export():
         sys.exit(1)
 
     print(f"Connecting to Postgres...")
+    prod_guard.check(DB_URL)
     pg = psycopg2.connect(DB_URL)
     pg.set_session(readonly=True)
     cur = pg.cursor()
