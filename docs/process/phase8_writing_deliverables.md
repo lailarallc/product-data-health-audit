@@ -12,7 +12,7 @@ Writing register: Technical but human. Speaking to a developer, hiring manager, 
 
 A complete product data health audit for a fictional specialty food company, built as a portfolio piece for a data consulting practice targeting CEOs at $10M to $100M.
 
-Cinderhaven Provisions is a $25 million specialty food brand with 50 SKUs, 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), and 6 contracted retailers (Walmart, Costco, Whole Foods, Sprouts, Kroger, Regional Group). The company is fictional. The dataset is synthetic. The methodology, the analytical frameworks, and the deliverables are real. Everything regenerates from a single command.
+Cinderhaven Provisions is a $25 million specialty food brand with 50 SKUs, 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), and 6 contracted retailers (national mass retailer, club retailer, natural grocer, regional natural grocer, conventional grocer, Regional Group). The company is fictional. The dataset is synthetic. The methodology, the analytical frameworks, and the deliverables are real. Everything regenerates from a single command.
 
 ## What this produces
 
@@ -154,7 +154,7 @@ This document records how the synthetic dataset was constructed and, more import
 
 ## Database overview
 
-The Cinderhaven product master database contains 9 tables: product_master (50 rows), sku_costs (50), stores (902), distribution_log, chargebacks, promotions, price_history, scan_data (~1.4M rows), and retailer_requirements. The database represents a fictional specialty food company at approximately $33 million in trailing twelve-month revenue with 50 SKUs across 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), selling through 6 contracted retailers (Walmart, Costco, Whole Foods, Sprouts, Kroger, Regional Group).
+The Cinderhaven product master database contains 9 tables: product_master (50 rows), sku_costs (50), stores (902), distribution_log, chargebacks, promotions, price_history, scan_data (~1.4M rows), and retailer_requirements. The database represents a fictional specialty food company at approximately $33 million in trailing twelve-month revenue with 50 SKUs across 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), selling through 6 contracted retailers (national mass retailer, club retailer, natural grocer, regional natural grocer, conventional grocer, Regional Group).
 
 ## Intentional defects and their real-world basis
 

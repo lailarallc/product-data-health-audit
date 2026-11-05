@@ -46,7 +46,7 @@ Universal framing section. No Cinderhaven data. Written so any specialty food CE
 
 ### 2. Company Profile — Cinderhaven Provisions
 
-Narrative introduction. ~$25M revenue, 50 SKUs across 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), ~902 stores across Walmart, Costco, Whole Foods, Sprouts, Kroger, Regional Group, UNFI, KeHE, DTC. Growth trajectory toward $55M. Written as a story, not a spec sheet.
+Narrative introduction. ~$25M revenue, 50 SKUs across 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), ~902 stores across the national mass retailer, club retailer, natural grocer, regional natural grocer, conventional grocer, Regional Group, distributor A, distributor B, DTC. Growth trajectory toward $55M. Written as a story, not a spec sheet.
 
 ### 3. TL;DR Tear-Sheet
 

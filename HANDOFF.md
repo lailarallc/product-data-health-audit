@@ -9,7 +9,7 @@ locally**, so R/Quarto edits are source-verified only; the Python preflight is f
 1. **Narrative-drift fixes** — every hardcoded numeric data-claim in report/tearsheet/
    dashboard prose is now a computed inline expression, verified against `output/frames/*.csv`.
    Caught two real stale claims: dashboard quick-wins ("two hours / $9,000–$16,000" → actual
-   4.0h / $12k–$18k) and Walmart/Whole-Foods net-margin ranks (were #4/#1, actually #6/#3).
+   4.0h / $12k–$18k) and national mass retailer / natural grocer net-margin ranks (were #4/#1, actually #6/#3).
 2. **Preflight wiring (Python, tested)** — `INPUT-SPEC.md`, `engagement.demo.yml`,
    `scripts/preflight_spec.py`, `scripts/run_preflight.py` (branded readiness report + validated
    handoff + `PREFLIGHT_STATUS.json` token; `--final` drops watermark), `R/00_preflight_gate.R`
@@ -33,7 +33,7 @@ fixes, gate + client chrome behave per spec. Four findings fixed this session (c
   `_variables.yml` (`quarto/write_variables.R`, `{{< var report_subtitle >}}`).
 - Golden harness: seeded `09_time_to_shelf` jitter; `scripts/golden_normalize.py`
   (htmlwidget/ggiraph id + xlsx docProps normalization) with tests.
-- Dashboard drift corrections (Walmart #6, WF #3; quick-wins 4.0h/$12k–$18k)
+- Dashboard drift corrections (national mass retailer #6, natural grocer #3; quick-wins 4.0h/$12k–$18k)
   **approved by Shawn as the new golden** — re-baseline before push.
 
 **Round-2 R-host verification (PDHA-RENDER-VERIFICATION-2.md, commit `b819cf2`):**

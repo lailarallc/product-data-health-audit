@@ -6,7 +6,7 @@ This document records how the synthetic dataset was constructed and, more import
 
 ## Database overview
 
-The Cinderhaven product master database contains 9 tables: product_master (50 rows), sku_costs (50), stores, distribution_log, chargebacks, promotions, price_history, scan_data (~1.4M rows), and retailer_requirements. The database represents a fictional specialty food company at approximately $33 million in trailing twelve-month revenue with 50 SKUs across 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), selling through 6 contracted retailers (Walmart, Costco, Whole Foods, Kroger, Sprouts, Regional Group).
+The Cinderhaven product master database contains 9 tables: product_master (50 rows), sku_costs (50), stores, distribution_log, chargebacks, promotions, price_history, scan_data (~1.4M rows), and retailer_requirements. The database represents a fictional specialty food company at approximately $33 million in trailing twelve-month revenue with 50 SKUs across 5 product lines (Artisan Sauces, Pantry Staples, Specialty Condiments, Dried Goods, Snack Bites), selling through 6 contracted retailers (national mass retailer, club retailer, natural grocer, conventional grocer, regional natural grocer, Regional Group).
 
 ## Intentional defects and their real-world basis
 

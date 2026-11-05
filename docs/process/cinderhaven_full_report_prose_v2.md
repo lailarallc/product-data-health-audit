@@ -14,16 +14,16 @@ By the end of 2027, every barcode in American retail will change. GS1 Sunrise 20
 
 Running in parallel, FSMA Rule 204 makes accurate GTINs a federal requirement. FDA food traceability mandates them as the product identifier backbone for tracking food through the supply chain. The barcode that used to be a scanning convenience is becoming the regulatory infrastructure for food safety. This is not a retailer preference. It is law.
 
-These two deadlines land on a company whose product master would fail basic validation at every contracted retailer today. Forty-five of 50 SKUs fail Walmart's required-field check. Those 45 carry the vast majority of the catalog's trailing twelve-month revenue. Costco is nearly as exposed. UNFI and Whole Foods less so, but UNFI's 54% pass rate still puts $14 million at risk.
+These two deadlines land on a company whose product master would fail basic validation at every contracted retailer today. Forty-five of 50 SKUs fail the national mass retailer's required-field check. Those 45 carry the vast majority of the catalog's trailing twelve-month revenue. The club retailer is nearly as exposed. Distributor A and the natural grocer less so, but distributor A's 54% pass rate still puts $14 million at risk.
 
 | Retailer | SKUs failing | Revenue at risk | Pass rate |
 |---|---:|---:|---:|
-| Walmart | 45 of 50 | $18.2M | 10% |
-| Costco | 45 of 50 | $18.0M | 10% |
-| Sprouts | 45 of 50 | [pipeline] | 10% |
-| Kroger | 50 of 50 | [pipeline] | 0% |
+| National mass retailer | 45 of 50 | $18.2M | 10% |
+| Club retailer | 45 of 50 | $18.0M | 10% |
+| Regional natural grocer | 45 of 50 | [pipeline] | 10% |
+| Conventional grocer | 50 of 50 | [pipeline] | 0% |
 | Regional | 50 of 50 | [pipeline] | 0% |
-| Whole Foods | 50 of 50 | $9.8M | 0% |
+| Natural grocer | 50 of 50 | $9.8M | 0% |
 
 These are not projections of what might happen if data quality degrades. They are measurements of the current product master against the current retailer requirements. The data fails now. The only reason the revenue still flows is that nobody has run the audit yet.
 
@@ -84,11 +84,11 @@ At CHP-0022's daily revenue rate, 30 extra days costs roughly $1,400. That's a s
 
 The progression from chargebacks to stalled revenue to shelf loss follows a severity curve. Chargebacks take your money. Stalled launches take your time. Shelf loss takes your position.
 
-CHP-0069, Infused Oil, Lemon Herb, was authorized across 248 Walmart stores. It carries three data defects: an invalid GTIN-14, an invalid UPC-12, and missing case dimensions. Over the first ten months of its Walmart authorization, these defects generated a steady trickle of chargebacks. Two events, $822. Small enough to disappear into the settlement statement. Not small enough for Walmart's compliance system to ignore.
+CHP-0069, Infused Oil, Lemon Herb, was authorized across 248 national mass retailer stores. It carries three data defects: an invalid GTIN-14, an invalid UPC-12, and missing case dimensions. Over the first ten months of its national mass retailer authorization, these defects generated a steady trickle of chargebacks. Two events, $822. Small enough to disappear into the settlement statement. Not small enough for the national mass retailer's compliance system to ignore.
 
 In March 2025, Walmart deauthorized CHP-0069 at two stores. Store WMT-0408 on March 3. Store WMT-0217 three weeks later. The product was pulled from two locations, and two shelf slots were filled by whatever the category manager had next in the queue. Those slots are gone. Winning them back requires a new category review, which happens once a year at Walmart, and a pitch that explains why the product that was pulled for data defects won't be pulled again.
 
-Two stores out of 248 sounds minor. It isn't. It's the signal that Walmart's system has flagged this SKU. The defects that triggered the deauthorizations at WMT-0408 and WMT-0217 are identical to the defects still present at the other 246 stores. The GTIN is still invalid. The case dimensions are still blank. Since the two deauthorizations, Walmart has issued 18 more chargeback events against CHP-0069 at the remaining stores, totaling $6,699. The charges are running at $400 to $500 a month with no sign of stopping. The two deauthorized stores were not the punishment. They were the warning shot. The unfixed data is the loaded gun still pointed at the other 246.
+Two stores out of 248 sounds minor. It isn't. It's the signal that the national mass retailer's system has flagged this SKU. The defects that triggered the deauthorizations at WMT-0408 and WMT-0217 are identical to the defects still present at the other 246 stores. The GTIN is still invalid. The case dimensions are still blank. Since the two deauthorizations, the national mass retailer has issued 18 more chargeback events against CHP-0069 at the remaining stores, totaling $6,699. The charges are running at $400 to $500 a month with no sign of stopping. The two deauthorized stores were not the punishment. They were the warning shot. The unfixed data is the loaded gun still pointed at the other 246.
 
 The pattern is not unique to CHP-0069. Bottom-half data quality SKUs get deauthorized at 4.5 times the rate of top-half SKUs. Thirty-one of 45 bottom-half SKUs have lost at least one slot. Fourteen of 45 top-half SKUs have. The data cannot prove that every deauthorization is a direct consequence of data quality. Retailers remove products for many reasons: poor velocity, planogram resets, category rationalization. But the correlation between data quality and deauthorization rate is the strongest signal in this dataset after the chargeback-to-defect linkage. The SKUs with the worst data lose shelf space at 4.5 times the rate. That is not a coincidence that disappears with a larger sample. That is a pattern that gets worse.
 
@@ -135,9 +135,9 @@ Twenty of those 50 failing SKUs are already shipping to Walmart. They were autho
 | CHP-0063 | Everything Bagel Seasoning | $853k |
 | CHP-0031 | Stone Ground Mustard | $736k |
 
-$15.1 million in Walmart-channel revenue riding on data that Walmart's own system would reject. Four of these appear in both this table and the top chargeback offenders list. The data defects are not hypothetical risk. They are already generating deductions on products that are already selling. The risk and the cost are happening simultaneously.
+$15.1 million in national mass retailer channel revenue riding on data that the retailer's own system would reject. Four of these appear in both this table and the top chargeback offenders list. The data defects are not hypothetical risk. They are already generating deductions on products that are already selling. The risk and the cost are happening simultaneously.
 
-The other 30 failing SKUs are not authorized at Walmart today. They are the expansion queue. If Cinderhaven wants to pitch a Walmart line extension, and at $25 million in revenue scaling toward $55 million, that pitch is coming, those 30 SKUs need their data fixed before the conversation starts. Not during the conversation. Before. A retailer's category team does not fix vendor data. They evaluate what's submitted. If the submission fails their automated checks, the conversation ends before a human being ever sees the product.
+The other 30 failing SKUs are not authorized at the national mass retailer today. They are the expansion queue. If Cinderhaven wants to pitch a national mass retailer line extension, and at $25 million in revenue scaling toward $55 million, that pitch is coming, those 30 SKUs need their data fixed before the conversation starts. Not during the conversation. Before. A retailer's category team does not fix vendor data. They evaluate what's submitted. If the submission fails their automated checks, the conversation ends before a human being ever sees the product.
 
 The counterintuitive finding makes this worse. Failing SKUs have slightly higher average velocity than passing SKUs: 11.3 units per store per week versus 10.6. The products with the worst data are selling faster than the products with the best data. The readiness gate is screening on data completeness, not commercial viability. The products being blocked from expansion are the ones the market wants most.
 
@@ -186,9 +186,9 @@ Only one of the top 10 passes all six retailers. Six pass zero or one. The $16.1
 
 The assumption that the highest-revenue products must have the best data is not just wrong. It is precisely inverted. The products that generate the most revenue received the same one-time data entry as every other product. They just generate larger penalties when that entry is wrong, attract more retailer scrutiny because of their volume, and create more exposure when a readiness audit runs. The risk concentrates at the top because revenue concentrates at the top. The data quality does not.
 
-Fixing CHP-0002 takes 40 minutes. Correct the GTIN check digit. Replace the "NA" in the brand owner field with "Cinderhaven Provisions." Submit the OneWorldSync registration. When that's done, $8,300 a year in chargebacks stops and the #1 SKU passes all six retailer readiness checks. The risk that Walmart runs an Item 360 audit and flags the company's flagship product goes from certain failure to clean pass.
+Fixing CHP-0002 takes 40 minutes. Correct the GTIN check digit. Replace the "NA" in the brand owner field with "Cinderhaven Provisions." Submit the OneWorldSync registration. When that's done, $8,300 a year in chargebacks stops and the #1 SKU passes all six retailer readiness checks. The risk that the national mass retailer runs a readiness audit and flags the company's flagship product goes from certain failure to clean pass.
 
-The risk of leaving it unfixed is not the $8,300. The risk is that a retailer runs the check. Walmart doesn't send a chargeback for a readiness failure. Walmart sends a deauthorization. And when the #1 SKU, 10.6% of company revenue, a million dollars in annual gross margin, loses its largest retailer, the conversation is not with the data team. It is with the board.
+The risk of leaving it unfixed is not the $8,300. The risk is that a retailer runs the check. The national mass retailer doesn't send a chargeback for a readiness failure. It sends a deauthorization. And when the #1 SKU, 10.6% of company revenue, a million dollars in annual gross margin, loses its largest retailer, the conversation is not with the data team. It is with the board.
 
 ---
 
@@ -233,22 +233,22 @@ The fix does not require better data entry. It requires a list. Put the revenue 
 
 ### You are allocating resources to the wrong retailer
 
-Walmart generates $13.1 million in gross revenue. That's 51% of the catalog. It is the largest channel by every gross metric. It is not the most profitable.
+The national mass retailer generates $13.1 million in gross revenue. That's 51% of the catalog. It is the largest channel by every gross metric. It is not the most profitable.
 
 | Retailer | Gross | Trade spend | Chargebacks | Net margin |
 |---|---:|---:|---:|---:|
-| Whole Foods | $2.78M | 12.5% | 0.36% | **87.0%** |
-| UNFI | $4.27M | 15.1% | 0.61% | 84.3% |
-| Costco | $2.25M | 16.4% | 0.40% | 82.4% |
-| Walmart | $13.10M | 21.3% | 0.33% | 78.4% |
+| Natural grocer | $2.78M | 12.5% | 0.36% | **87.0%** |
+| Distributor A | $4.27M | 15.1% | 0.61% | 84.3% |
+| Club retailer | $2.25M | 16.4% | 0.40% | 82.4% |
+| National mass retailer | $13.10M | 21.3% | 0.33% | 78.4% |
 
-Whole Foods contributes 87 cents of margin on every dollar of revenue. Walmart contributes 78 cents. The nine-cent gap is almost entirely trade spend.
+The natural grocer contributes 87 cents of margin on every dollar of revenue. The national mass retailer contributes 78 cents. The nine-cent gap is almost entirely trade spend.
 
-This table reorders the CEO's priorities. Not away from Walmart. Walmart generates $10.27 million in net contribution. You don't walk away from that. But you stop assuming that Walmart volume equals Walmart profitability when deciding where to invest ops resources, which retailer gets the first call when there's a data issue, and which expansion opportunity gets prioritized.
+This table reorders the CEO's priorities. Not away from the national mass retailer. It generates $10.27 million in net contribution. You don't walk away from that. But you stop assuming that national mass retailer volume equals national mass retailer profitability when deciding where to invest ops resources, which retailer gets the first call when there's a data issue, and which expansion opportunity gets prioritized.
 
 The chargeback column reveals something else. The rates are small at every retailer, between 0.33% and 0.61% of revenue. But chargebacks are the only margin lever entirely within Cinderhaven's control. Trade spend is negotiated once a year. Chargebacks are generated by data defects that Cinderhaven can fix any Tuesday afternoon. Every dollar recovered drops straight to net contribution with no negotiation, no pitch deck, no relationship risk.
 
-UNFI is the overlooked story. It generates $26,000 in chargebacks, 30% of the total, despite being the #2 retailer by revenue. Its chargeback rate (0.61% of revenue) is the highest of the four. UNFI's compliance requirements are less visible than Walmart's. The data says they enforce them just as consistently. A cleanup that focuses on Walmart because Walmart is the biggest name leaves $26,000 of UNFI chargebacks untouched and a 0.61% bleed rate unaddressed at the retailer with the second-best margin density.
+Distributor A is the overlooked story. It generates $26,000 in chargebacks, 30% of the total, despite being the #2 retailer by revenue. Its chargeback rate (0.61% of revenue) is the highest of the four. Distributor A's compliance requirements are less visible than the national mass retailer's. The data says they enforce them just as consistently. A cleanup that focuses on the national mass retailer because it is the biggest name leaves $26,000 of distributor A chargebacks untouched and a 0.61% bleed rate unaddressed at the retailer with the second-best margin density.
 
 ### One product line already has better outcomes. The reason isn't what you'd guess.
 
@@ -352,9 +352,9 @@ The work described in this report is four phases of specific, bounded tasks, eac
 
 Phase one takes an afternoon. Correct the nine invalid GTIN-14 check digits. Each one is a ten-minute fix: open the record, recalculate the check digit, type the correct number. While the corrections propagate through OneWorldSync, move to the brand owner fields. Replace the seventeen "NA" values with "Cinderhaven Provisions." Submit the initial OneWorldSync registrations for SKUs that are currently listed as "Not Registered."
 
-When phase one is done, 60% of the chargeback bill stops. The nine GTIN corrections alone eliminate $35,000 a year in penalties. The first clean settlement statement arrives within 30 to 60 days. The retailer readiness pass rate at Walmart moves from 44% to approximately 80%.
+When phase one is done, 60% of the chargeback bill stops. The nine GTIN corrections alone eliminate $35,000 a year in penalties. The first clean settlement statement arrives within 30 to 60 days. The retailer readiness pass rate at the national mass retailer moves from 44% to approximately 80%.
 
-Phase two takes a week. Complete every remaining missing field across the catalog. Case dimensions on 21 SKUs, which means pulling physical product and measuring it. Country of origin on 6 SKUs. Remaining OneWorldSync registrations. This is the physical work: a tape measure, a scale, a phone call to a supplier for imported ingredients. When phase two is done, every SKU in the catalog passes all six retailers' readiness checks. The 50 SKUs currently failing at Walmart become eligible for submission. The $18.2 million in at-risk revenue is secured.
+Phase two takes a week. Complete every remaining missing field across the catalog. Case dimensions on 21 SKUs, which means pulling physical product and measuring it. Country of origin on 6 SKUs. Remaining OneWorldSync registrations. This is the physical work: a tape measure, a scale, a phone call to a supplier for imported ingredients. When phase two is done, every SKU in the catalog passes all six retailers' readiness checks. The 50 SKUs currently failing at the national mass retailer become eligible for submission. The $18.2 million in at-risk revenue is secured.
 
 Phase three takes two days. This is the phase that prevents the first two from being wasted. Without a gate between data entry and the live product master, the next SKU launch will introduce the same defects that phases one and two just cleaned. The broker intake checklist is the simplest version of that gate: eight required fields, five minutes to complete, applied to every entry path. The validation logic can be as simple as a check digit calculation that runs when a GTIN is entered and blocks the save if it fails. The technology is trivial. The discipline is the deliverable.
 
