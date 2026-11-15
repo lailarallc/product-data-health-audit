@@ -2,7 +2,7 @@
 
 This document records how the synthetic dataset was constructed and, more importantly, how it was intentionally broken. Every defect in the Cinderhaven database was placed deliberately to simulate a pattern observed in real retail product data. The purpose is to demonstrate knowledge of what real data looks like in the wild, not just what clean database tables look like.
 
-> **Verification note:** Run `Rscript R/03_verify.R` to confirm actual counts from the database.
+> **Verification note:** Run `Rscript R/03_verify.R` to confirm actual counts from the database. Defect counts below were last checked against `output/frames/raw_tables.rds` on 2026-11-15.
 
 ## Database overview
 
@@ -12,15 +12,15 @@ The Cinderhaven product master database contains 9 tables: product_master (50 ro
 
 ### GTIN-14 check digit errors
 
-**What was done:** Misaligned the mod-10 check digit on 45 of 50 SKUs (90%).
+**What was done:** Misaligned the mod-10 check digit on 12 of 50 SKUs (24%).
 
 **Real-world basis:** Human data-entry error rates on numeric fields in product masters typically run 5% to 15%, depending on the entry process and whether any validation exists at point of entry. The most common GTIN error is a transposed or miscalculated check digit, because the check digit is the last field entered and is often typed from memory or from a label that has been photocopied, faxed, or re-keyed from a broker spreadsheet. Most product masters have no check digit validation at entry. The error persists indefinitely because nobody re-validates GTIN fields after initial entry.
 
-**What this enables in the analysis:** The chargeback-to-defect linkage that is the centerpiece of the report. Forty-five wrong check digits generating chargebacks traceable to a specific field in a specific record.
+**What this enables in the analysis:** The chargeback-to-defect linkage that is the centerpiece of the report. Twelve wrong check digits generating chargebacks traceable to a specific field in a specific record.
 
 ### UPC-12 check digit errors
 
-**What was done:** Misaligned the mod-10 check digit on 45 of 50 SKUs (90%).
+**What was done:** Misaligned the mod-10 check digit on 12 of 50 SKUs (24%). They are the same 12 SKUs that carry the GTIN-14 error.
 
 **Real-world basis:** Same mechanism as GTIN-14 errors but less common because UPC-12 is the consumer-facing barcode that gets scanned at retail POS. Errors in the UPC are more likely to be caught by in-store scanning during the first week of sales. GTIN-14 errors persist longer because the case-level barcode is scanned at distribution centers where the feedback loop to the vendor is slower.
 
@@ -32,15 +32,21 @@ The Cinderhaven product master database contains 9 tables: product_master (50 ro
 
 ### Missing case dimensions
 
-**What was done:** Case dimensions are fully populated on all 50 SKUs. No blank values exist in the current dataset.
+**What was done:** Blanked at least one case dimension on 19 of 50 SKUs (38%): length on 9, width on 5, height on 6.
 
-**Real-world basis:** Case dimensions require physical measurement of the actual product. Unlike text fields that can be typed from a specification sheet, dimensions require someone to pull a case from inventory, put it on a scale, and measure it with a tape. This step is skipped more often than any other because it requires physical access to inventory and because the person entering the data may not have access to a warehouse. The 32% rate mirrors the typical state of a mid-market company that has populated dimensions for products that have gone through a full retailer onboarding process but not for products that were added to the master through informal channels.
+**Real-world basis:** Case dimensions require physical measurement of the actual product. Unlike text fields that can be typed from a specification sheet, dimensions require someone to pull a case from inventory, put it on a scale, and measure it with a tape. This step is skipped more often than any other because it requires physical access to inventory and because the person entering the data may not have access to a warehouse. The 38% rate mirrors the typical state of a mid-market company that has populated dimensions for products that have gone through a full retailer onboarding process but not for products that were added to the master through informal channels.
 
-### Implausible case weights
+### Missing case weights
 
-**What was done:** Set case weights to values outside a plausible range (too high, too low, or zero) on a subset of SKUs.
+**What was done:** Blanked the case weight on 3 of 50 SKUs (6%). The same 3 SKUs have no unit weight. Every populated case weight is plausible against case pack and unit weight; no implausible values exist in the current dataset.
 
 **Real-world basis:** When case weights are populated, they are sometimes entered in the wrong unit (pounds instead of kilograms or vice versa), copied from the wrong product, or defaulted to zero by an import script that treats null as zero. These values pass a "field is not blank" check but fail a plausibility check, triggering dimension mismatch chargebacks when the warehouse receives a case that doesn't match the record.
+
+### Missing country of origin
+
+**What was done:** Blanked country_of_origin on 1 of 50 SKUs (2%).
+
+**Real-world basis:** Country of origin is usually typed once at item setup and never revisited. A blank passes at retailers that do not require the field and fails at those that do, so the gap surfaces only when the SKU is offered to a stricter customer.
 
 ### OneWorldSync registration status
 
@@ -56,7 +62,7 @@ The Cinderhaven product master database contains 9 tables: product_master (50 ro
 
 ### Chargeback concentration (Pareto distribution)
 
-**What was done:** Seeded chargeback event counts and dollar amounts across all 50 SKUs. In the current dataset, chargebacks are evenly distributed rather than Pareto-concentrated.
+**What was done:** Seeded chargeback event counts and dollar amounts across all 50 SKUs. In the current dataset every SKU carries some chargebacks, and the dollars are concentrated: the top 5 SKUs (10%) carry 42% of chargeback dollars and the top 10 (20%) carry 60%. Of 2,873 chargebacks, 275 carry a `triggered_by_field` value naming one of five product-data fields (case dimensions, UPC, GTIN-14, country of origin, case weight).
 
 **Real-world basis:** Chargeback distributions in real retail are consistently Pareto-shaped. A small number of SKUs, typically those with multiple overlapping data defects, generate a disproportionate share of chargeback dollars. The 80/20 pattern (or steeper) is the most commonly observed distribution in chargeback analysis across CPG categories.
 
@@ -86,9 +92,9 @@ The Cinderhaven product master database contains 9 tables: product_master (50 ro
 
 ### Promotional data
 
-**What was done:** Generated 125 promotions across the observation window. Most do not have sufficient pre-promotion scan history to compute lift cleanly. Of the 125 promotions, 18 have sufficient pre-period scan data to estimate lift; the observed median lift is 74% and the mean lift is 77%.
+**What was done:** Generated 123 promotions across the observation window. Most do not have sufficient pre-promotion scan history to compute lift cleanly. Of the 123 promotions, 18 have sufficient pre-period scan data to estimate lift; the observed median lift is 74% and the mean lift is 77%.
 
-**Real-world basis:** Promotional effectiveness data in real retail is notoriously noisy. Most mid-market specialty food companies cannot isolate promotional lift because they lack control-store methodology, pre-promotion baseline measurement, and consistent promotional calendars. The limited computability (18 of 125 promotions) reflects the reality that most promotional events at this scale lack the clean pre-period baseline needed to measure lift. The positive lift among computable promotions is consistent with the effect of temporary price reductions on specialty food products, where even modest promotions can drive meaningful volume increases.
+**Real-world basis:** Promotional effectiveness data in real retail is notoriously noisy. Most mid-market specialty food companies cannot isolate promotional lift because they lack control-store methodology, pre-promotion baseline measurement, and consistent promotional calendars. The limited computability (18 of 123 promotions) reflects the reality that most promotional events at this scale lack the clean pre-period baseline needed to measure lift. The positive lift among computable promotions is consistent with the effect of temporary price reductions on specialty food products, where even modest promotions can drive meaningful volume increases.
 
 ## What the synthetic data cannot do
 
