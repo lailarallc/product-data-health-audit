@@ -20,7 +20,7 @@ Plus two one-page shareable artifacts: a GS1 Sunrise 2027 / FSMA 204 compliance 
 
 ## Why it matters
 
-GS1 Sunrise 2027 requires every food brand to re-validate product data for 2D barcodes — the deadline is confirmed with no extension. But the federal timeline is already beside the point: Walmart began enforcing FSMA 204-style traceability requirements on August 1, 2025. Kroger's deadline passed June 30, 2025. Over 70 retailers have announced their own traceability programs, and nearly half require compliance for all foods — not just the FDA's Food Traceability List.
+GS1 Sunrise 2027 requires every food brand to re-validate product data for 2D barcodes — the deadline is confirmed with no extension. But the federal timeline is already beside the point: Walmart set an August 1, 2025 deadline for its own FSMA 204-style traceability requirements. Kroger's deadline passed June 30, 2025. Dozens of retailers and wholesalers have set their own traceability deadlines, and some, including those two, cover all foods — not just the FDA's Food Traceability List.
 
 Most specialty food companies don't know which of their SKUs will fail these requirements — or that dirty product data is already a recurring line item on their remittances. This audit finds out, quantifies the cost, and ranks the fixes.
 
