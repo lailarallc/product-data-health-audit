@@ -407,9 +407,9 @@ ui <- page_navbar(
                  "approaches and emergency-rate fixes become the only option."),
           tags$p(style = paste0("color:", PAL$text_muted, "; max-width:60ch;"),
                  "Major retailers aren't waiting for federal deadlines. ",
-                 "Walmart and Kroger began enforcing traceability requirements ",
-                 "in 2025. Over 70 retailers have announced compliance ",
-                 "programs with timelines ahead of the FDA's."),
+                 "Walmart and Kroger set their own supplier traceability ",
+                 "deadlines in 2025. Dozens of retailers and wholesalers have ",
+                 "set their own deadlines ahead of the FDA's."),
 
           tags$hr(),
 
