@@ -106,14 +106,14 @@ readiness_band <- function(P) {
                           body  = "Failing SKUs are a manageable workload. Address them before Q4 2027.")
   else if (P >= 0.4) list(label = "At risk",
                           color = "#7e1f34",    bg = "#fbe9ed",
-                          body  = "Less than 50% passing. The failing SKUs are blockers for both compliance transitions.")
+                          body  = "Less than 70% passing. The failing SKUs are blockers for both compliance transitions.")
   else list(label = "Not ready",
             color = PAL$red,       bg = "#fce8e7",
             body  = "The catalog is not in a state to participate in either transition. Cleanup needs to start now.")
 }
 
 # Cost-of-Delay model: cumulative cost as a function of months waited.
-# Three components compound: chargebacks accrue monthly, shelf loss scales
+# Three components add up: chargebacks accrue monthly, shelf loss scales
 # linearly with time, and an emergency-remediation multiplier kicks in as
 # the deadline approaches.
 emergency_mult <- function(months_waited, months_to_deadline) {
@@ -397,10 +397,10 @@ ui <- page_navbar(
         ),
 
         div(role = "region", `aria-label` = "Cost of delay",
-          tags$h2("Every month of delay costs more than the last",
+          tags$h2("Every month of delay adds to the cost",
                   style = paste0("font-size:1.4rem; color:", PAL$ink)),
           tags$p(style = paste0("color:", PAL$text_muted, "; max-width:60ch;"),
-                 "Three things compound while a data defect sits unfixed: ",
+                 "Three things add up while a data defect sits unfixed: ",
                  "chargebacks accrue every month, shelf is lost as retailers ",
                  "deauthorize SKUs that fail their checks, and the per-SKU ",
                  "remediation cost rises as the GS1 Sunrise 2027 deadline ",
@@ -417,7 +417,7 @@ ui <- page_navbar(
             div(class = "stat-card",
               div(class = "stat-num", textOutput("cod_m1", inline = TRUE)),
               div(class = "stat-lbl", "Fix in Month 1"),
-              div(class = "stat-sub", "Base remediation cost only.")),
+              div(class = "stat-sub", "One month of losses plus the base fix cost.")),
             div(class = "stat-card",
               div(class = "stat-num", textOutput("cod_m12", inline = TRUE)),
               div(class = "stat-lbl", "Wait 12 months"),
