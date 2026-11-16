@@ -212,12 +212,12 @@ relabel_partners <- function(x) {
 }
 
 # Relabel the partner columns of one frame. Only columns that hold partner names
-# are touched (retailer, distributor, and their plural list forms), so a product
-# name or a field label can never be rewritten by accident.
+# are touched (any column with "retailer" or "distributor" in its name), so a
+# product name or a field label can never be rewritten by accident. Partner ids
+# such as RET-COSTCO are upper-case codes and do not match the names.
 public_partner_labels <- function(df, eng) {
   if (!isTRUE(eng$is_demo) || !is.data.frame(df)) return(df)
-  cols <- grep("(^|_)(retailer|retailers|distributor|distributors)$", names(df),
-               value = TRUE)
+  cols <- grep("retailer|distributor", names(df), value = TRUE)
   for (col in cols) {
     x <- df[[col]]
     if (is.factor(x)) {

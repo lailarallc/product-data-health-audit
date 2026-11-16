@@ -76,9 +76,12 @@ def main() -> int:
             text = text_of(path) or ""
             counts = {lab: text.count(lab) for lab in LABELS}
             print(f"::notice::partner-label gate: {path} label counts {counts}")
-            if not all(counts.values()):
+            # The report covers the whole roster; the dashboard shows only the
+            # contracted subset, so it need only carry some labels.
+            ok = all(counts.values()) if path.endswith("report.html") else any(counts.values())
+            if not ok:
                 failed = True
-                print(f"::error::partner-label gate: {path} is missing a role label {counts}")
+                print(f"::error::partner-label gate: {path} is missing role labels {counts}")
     print(f"partner-label gate: scanned {scanned} files, {'FAILED' if failed else 'clean'}")
     return 1 if failed else 0
 
