@@ -86,7 +86,7 @@ velocity <- read_p("velocity") |>
       levels = c("Worst 25%", "Below average", "Above average", "Best 25%")),
     dq_flag = ifelse(issue_count >= 3, "REVIEW", "OK")
   ) |>
-  filter(retailer %in% c("Walmart", "Costco", "Whole Foods")) |>
+  filter(retailer %in% c("National mass retailer", "Club retailer", "Natural grocer")) |>
   arrange(desc(dollars_12w))
 ```
 
@@ -251,8 +251,8 @@ reactable(
 > Trade spend and chargebacks are the two things subtracted in between.
 >
 > **What to look for:** The gap between gross revenue rank and net margin
-> rank. Walmart is #`r rrank("Walmart", "gross_rank")` in gross dollars and #`r rrank("Walmart", "margin_rank")` in net margin percentage.
-> Whole Foods is #`r rrank("Whole Foods", "gross_rank")` in gross dollars and #`r rrank("Whole Foods", "margin_rank")` in net margin. Chargebacks are
+> rank. The national mass retailer is #`r rrank("National mass retailer", "gross_rank")` in gross dollars and #`r rrank("National mass retailer", "margin_rank")` in net margin percentage.
+> The natural grocer is #`r rrank("Natural grocer", "gross_rank")` in gross dollars and #`r rrank("Natural grocer", "margin_rank")` in net margin. Chargebacks are
 > the only margin component in this chart that is entirely within
 > `r client_short`'s operational control.
 
@@ -261,7 +261,7 @@ reactable(
 #| fig-height: 7
 #| fig-format: svg
 
-contracted <- c("Walmart", "Whole Foods", "Costco")
+contracted <- c("National mass retailer", "Natural grocer", "Club retailer")
 
 pnl <- retailer_pnl |>
   filter(retailer %in% contracted) |>

@@ -196,15 +196,15 @@ p6_base <- function(use_interactive) {
     scale_x_continuous(labels = label_dollar(scale = 1e-6, suffix = "M"),
                        expand = expansion(mult = c(0, 0.55))) +
     scale_fill_manual(values = c(
-      "Walmart"        = LL_BAR_HIGHLIGHT,
-      "Costco"         = LL_BAR_DEFAULT,
-      "Whole Foods"    = LL_BAR_DEFAULT,
-      "Kroger"         = LL_BAR_DEFAULT,
-      "Sprouts"        = LL_BAR_DEFAULT,
+      "National mass retailer"        = LL_BAR_HIGHLIGHT,
+      "Club retailer"         = LL_BAR_DEFAULT,
+      "Natural grocer"    = LL_BAR_DEFAULT,
+      "Conventional grocer"         = LL_BAR_DEFAULT,
+      "Regional natural grocer"        = LL_BAR_DEFAULT,
       "Regional Group" = LL_BAR_DEFAULT),
       guide = "none") +
-    labs(title    = wrap_title(sprintf("Revenue at risk: %s rides on data Walmart could reject today",
-                           dollar_short(c6$rev_at_risk[which(c6$retailer == "Walmart")]))),
+    labs(title    = wrap_title(sprintf("Revenue at risk: %s rides on data the national mass retailer could reject today",
+                           dollar_short(c6$rev_at_risk[which(c6$retailer == "National mass retailer")]))),
          subtitle = "Bar = annual revenue from SKUs that fail at least one required field for that retailer",
          x = "Revenue at risk", y = NULL,
          caption = "Source: retailer_readiness_summary + sku_master_full, audit run 2026-05-03") +

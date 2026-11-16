@@ -185,3 +185,47 @@ eng_watermark_md <- function(eng) {
     ". Rebuild with `ENGAGEMENT_FINAL=true` for the final deliverable.\n",
     ":::\n")
 }
+
+# ---- Public partner labels (demo builds only) --------------------------------
+# The Cinderhaven dataset keeps real trading-partner names. Every demo
+# deliverable shows role labels instead, because each one puts the partner beside
+# a Cinderhaven dollar figure (owner rule, 2026-11-05; map vendored from
+# lailara-website as reference/retailer_display_labels.json). Applied once, where
+# 02_build_frames.R writes the frames, so every chart, table, workbook and
+# document downstream reads labels. A client build (demo: false) is untouched:
+# a client sees its own partners under their own names.
+PUBLIC_PARTNER_LABELS <- c(
+  "Walmart"        = "National mass retailer",
+  "Costco"         = "Club retailer",
+  "Whole Foods"    = "Natural grocer",
+  "Kroger"         = "Conventional grocer",
+  "Sprouts"        = "Regional natural grocer",
+  "UNFI"           = "Distributor A",
+  "KeHE"           = "Distributor B",
+  "DPI Northwest"  = "Distributor C"
+)
+
+relabel_partners <- function(x) {
+  for (nm in names(PUBLIC_PARTNER_LABELS))
+    x <- gsub(nm, PUBLIC_PARTNER_LABELS[[nm]], x, fixed = TRUE)
+  x
+}
+
+# Relabel the partner columns of one frame. Only columns that hold partner names
+# are touched (retailer, distributor, and their plural list forms), so a product
+# name or a field label can never be rewritten by accident.
+public_partner_labels <- function(df, eng) {
+  if (!isTRUE(eng$is_demo) || !is.data.frame(df)) return(df)
+  cols <- grep("(^|_)(retailer|retailers|distributor|distributors)$", names(df),
+               value = TRUE)
+  for (col in cols) {
+    x <- df[[col]]
+    if (is.factor(x)) {
+      levels(x) <- relabel_partners(levels(x))
+      df[[col]] <- x
+    } else if (is.character(x)) {
+      df[[col]] <- relabel_partners(x)
+    }
+  }
+  df
+}
