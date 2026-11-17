@@ -175,7 +175,7 @@ dict_sections <- list(
 ~column,                       ~definition,
 "sku",                         "Cinderhaven product identifier (CHP-XXXX).",
 "product_name",                "Product display name.",
-"retailer",                    "Contracted retailer name (Walmart, Costco, Whole Foods).",
+"retailer",                    "Contracted retailer, shown by role label (national mass retailer, club retailer, natural grocer).",
 "product_line",                "Product line (Artisan Sauces, Specialty Condiments, Pantry Staples).",
 "stores_4w",                   "Number of stores with active authorization for this SKU at this retailer.",
 "ups_per_wk_4wk",                "Units sold per store per week, averaged over the most recent 4-week window.",

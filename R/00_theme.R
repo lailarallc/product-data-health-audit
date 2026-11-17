@@ -104,11 +104,11 @@ product_line_colors <- c(
 # ---- retailer colors -------------------------------------------------------
 # Six contracted retailers.
 retailer_colors <- c(
-  "Walmart"        = LL_CHICAGO,
-  "Costco"         = LL_TOKYO,
-  "Whole Foods"    = LL_HK_DARK,
-  "Sprouts"        = LL_SG,
-  "Kroger"         = LL_NY,
+  "National mass retailer"        = LL_CHICAGO,
+  "Club retailer"         = LL_TOKYO,
+  "Natural grocer"    = LL_HK_DARK,
+  "Regional natural grocer"        = LL_SG,
+  "Conventional grocer"         = LL_NY,
   "Regional Group" = LL_REFERENCE
 )
 
@@ -288,7 +288,7 @@ if (identical(Sys.getenv("CINDERHAVEN_THEME_TEST"), "1")) {
     scale_x_dollar_m() +
     scale_retailer_fill(guide = "none") +
     labs(title = "Retailer palette",
-         subtitle = "Walmart is the dominant share",
+         subtitle = "The national mass retailer is the dominant share",
          x = NULL, y = NULL,
          caption = src_caption("test data")) +
     theme_lailara_horizontal()

@@ -556,6 +556,10 @@ rm(scan_vel, vel_last_week, vel_cut_4w, vel_cut_12w, vel_cut_8w,
 # ---- write everything ------------------------------------------------------
 
 write_pair <- function(df, name) {
+  # Demo builds leave here with role labels in place of partner names
+  # (public_partner_labels, R/engagement.R). Everything above this line works
+  # on the dataset's own names.
+  df <- public_partner_labels(df, eng)
   saveRDS(df, file.path(OUT_DIR, paste0(name, ".rds")))
   write_csv(df, file.path(OUT_DIR, paste0(name, ".csv")))
 }

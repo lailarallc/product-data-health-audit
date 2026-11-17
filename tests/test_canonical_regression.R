@@ -115,8 +115,10 @@ assert("chargebacks_enriched is not empty",
 
 cb_retailers <- unique(cb$retailer)
 
-canonical_retailers <- c("Walmart", "Costco", "Whole Foods",
-                         "Kroger", "Sprouts", "Regional Group")
+# Demo frames carry role labels, not partner names (R/engagement.R).
+canonical_retailers <- c("National mass retailer", "Club retailer",
+                         "Natural grocer", "Conventional grocer",
+                         "Regional natural grocer", "Regional Group")
 
 for (r in canonical_retailers) {
   assert(sprintf("chargebacks contain data for %s", r),

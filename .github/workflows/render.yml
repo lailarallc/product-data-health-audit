@@ -87,6 +87,11 @@ jobs:
           PROJECT_ROOT: ${{ github.workspace }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Partner-label gate
+        run: |
+          sudo apt-get install -y --no-install-recommends poppler-utils
+          python3 scripts/check_partner_labels.py
+
       - name: Upload output artifacts
         if: always()
         uses: actions/upload-artifact@v7

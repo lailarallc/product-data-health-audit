@@ -173,7 +173,7 @@ rev_at_risk <- function(ret) {
   smf |> semi_join(rrs |> filter(retailer == ret, !overall_pass), by = "sku") |>
     summarise(r = sum(ttm_revenue, na.rm = TRUE)) |> pull(r)
 }
-wm_rev_risk <- rev_at_risk("Walmart")
+wm_rev_risk <- rev_at_risk("National mass retailer")
 wm_rev_pct  <- round(100 * wm_rev_risk / total_ttm_rev)
 
 n_retailers <- n_distinct(rrs$retailer)
@@ -368,7 +368,7 @@ deauth_ex_defects <- deauth_ex$issue_count
 deauth_ex_cb_total <- deauth_ex$chargeback_total
 ```
 
-`r deauth_ex$sku`, `r deauth_ex$product_name`, was authorized across `r deauth_ex$auth_count` stores. It carries `r deauth_ex_defects` data defects and has been deauthorized at `r deauth_ex$deauth_count` locations. Those slots are gone. Winning them back requires a new category review, which happens once a year at Walmart, and a pitch that explains why the product that was pulled for data defects won't be pulled again.
+`r deauth_ex$sku`, `r deauth_ex$product_name`, was authorized across `r deauth_ex$auth_count` stores. It carries `r deauth_ex_defects` data defects and has been deauthorized at `r deauth_ex$deauth_count` locations. Those slots are gone. Winning them back requires a new category review, which happens once a year at the national mass retailer, and a pitch that explains why the product that was pulled for data defects won't be pulled again.
 
 Deauthorizations trace to multiple causes. Some are data-driven — a retailer's automated system flagging an invalid barcode. Others are fulfillment-driven — repeated short shipments or late deliveries crossing a compliance threshold. This audit identifies the data-driven deauthorization risk. A SKU carrying invalid barcodes at a retailer that runs automated validation is a deauthorization candidate every time the system checks. Fixing the barcode removes that specific trigger. It does not remove fulfillment-driven risk, which requires operational changes.
 
@@ -466,7 +466,7 @@ cat(kable(top10_dq, format = "pipe", align = c("r","l","r","r","r","c")), sep = 
 
 The difference is not commercial attention. Everyone at `r client_short` knows what Trail Mix Premium sells. Nobody knows that its GTIN-14 check digit is wrong. Those are two different kinds of knowing, and only the first one happens naturally.
 
-The risk of leaving CHP-DG-007 unfixed is not the `r ds(dg007_annual)`. The risk is that a retailer runs the check. Walmart does not send a chargeback for a readiness failure. Walmart sends a deauthorization. And when a `r ds(dg007$ttm_revenue)` product — one that already fails every retailer it ships to — loses shelf space at its largest account, the conversation is not with the data team. It is with the board.
+The risk of leaving CHP-DG-007 unfixed is not the `r ds(dg007_annual)`. The risk is that a retailer runs the check. The national mass retailer does not send a chargeback for a readiness failure. It sends a deauthorization. And when a `r ds(dg007$ttm_revenue)` product — one that already fails every retailer it ships to — loses shelf space at its largest account, the conversation is not with the data team. It is with the board.
 
 # Part 2: Why It Happens
 
@@ -503,14 +503,14 @@ The fix does not require better data entry. It requires a list. Put the revenue 
 
 ```{r retailer-pnl}
 #| include: false
-wm_pnl <- rpnl |> filter(retailer == "Walmart")
+wm_pnl <- rpnl |> filter(retailer == "National mass retailer")
 wm_gross <- wm_pnl$gross_revenue
 wm_pct_of_total <- round(100 * wm_gross / total_ttm_rev)
 best_margin_ret <- rpnl |> arrange(desc(net_margin_pct_of_gross_revenue)) |> slice(1)
 worst_margin_ret <- rpnl |> arrange(net_margin_pct_of_gross_revenue) |> slice(1)
 ```
 
-Walmart generates `r ds(wm_gross)` in gross revenue. That's `r wm_pct_of_total`% of the catalog. It is the largest channel by every gross metric. It is not the most profitable.
+The national mass retailer generates `r ds(wm_gross)` in gross revenue. That's `r wm_pct_of_total`% of the catalog. It is the largest channel by every gross metric. It is not the most profitable.
 
 ```{r retailer-margin-table}
 #| results: asis
@@ -527,11 +527,11 @@ margin_tbl <- rpnl |>
 cat(kable(margin_tbl, format = "pipe", align = c("l", "r", "r", "r", "r")), sep = "\n")
 ```
 
-*Methodology note: the product master carries no Kroger-specific trade-spend rate, so Kroger's trade spend is proxied with the Regional Group rate. Its trade-spend and net-margin figures inherit that assumption.*
+*Methodology note: the product master carries no trade-spend rate for the conventional grocer, so its trade spend is proxied with the Regional Group rate. Its trade-spend and net-margin figures inherit that assumption.*
 
 `r best_margin_ret$retailer` contributes `r round(100 * best_margin_ret$net_margin_pct_of_gross_revenue)` cents of margin on every dollar of revenue. `r worst_margin_ret$retailer` contributes `r round(100 * worst_margin_ret$net_margin_pct_of_gross_revenue)` cents. The `r round(100 * best_margin_ret$net_margin_pct_of_gross_revenue) - round(100 * worst_margin_ret$net_margin_pct_of_gross_revenue)`-cent gap is almost entirely trade spend.
 
-This table reorders the CEO's priorities. Not away from Walmart. Walmart generates `r ds(wm_pnl$net_contribution)` in net contribution. You don't walk away from that. But you stop assuming that Walmart volume equals Walmart profitability when deciding where to invest ops resources, which retailer gets the first call when there's a data issue, and which expansion opportunity gets prioritized.
+This table reorders the CEO's priorities. Not away from the national mass retailer. It generates `r ds(wm_pnl$net_contribution)` in net contribution. You don't walk away from that. But you stop assuming that its volume equals its profitability when deciding where to invest ops resources, which retailer gets the first call when there's a data issue, and which expansion opportunity gets prioritized.
 
 The chargeback column reveals something else. The rates are small at every retailer. Data-linked chargebacks are the margin lever with the lowest cost to act on. Trade spend is negotiated once a year. Logistics chargebacks require operational changes. Barcode corrections require a product master update.
 
@@ -797,17 +797,17 @@ reactable(
 
 Here is what Monday morning looks like today at `r client_short`.
 
-The ops manager opens six retailer portals, downloads CSV files with different column headers, pastes them into the Excel workbook she built six months ago, adjusts column mappings because Costco changed their export format after a system update, refreshes the pivot table, and spends fifteen minutes before the meeting reconciling a number that doesn't match the broker's Friday email. The discrepancy is a store count definition. She doesn't have time to find out which one is right. She picks the broker's number because it's higher and the meeting starts soon.
+The ops manager opens six retailer portals, downloads CSV files with different column headers, pastes them into the Excel workbook she built six months ago, adjusts column mappings because the club retailer changed its export format after a system update, refreshes the pivot table, and spends fifteen minutes before the meeting reconciling a number that doesn't match the broker's Friday email. The discrepancy is a store count definition. She doesn't have time to find out which one is right. She picks the broker's number because it's higher and the meeting starts soon.
 
-The meeting starts. The CEO asks why Cranberry Mostarda dropped 15% at Costco. She doesn't have a ready answer. The pivot table flagged the drop but doesn't link to a cause. Was it a stockout? A planogram reset? A data-driven deauthorization at two locations? The information exists in four different systems. None of them talk to each other. She says she'll look into it. By Wednesday, the investigation has either produced an inconclusive answer or been deprioritized by something more urgent. Next Monday, the same 90 minutes happen again.
+The meeting starts. The CEO asks why Cranberry Mostarda dropped 15% at the club retailer. She doesn't have a ready answer. The pivot table flagged the drop but doesn't link to a cause. Was it a stockout? A planogram reset? A data-driven deauthorization at two locations? The information exists in four different systems. None of them talk to each other. She says she'll look into it. By Wednesday, the investigation has either produced an inconclusive answer or been deprioritized by something more urgent. Next Monday, the same 90 minutes happen again.
 
 This cycle consumes 15 to 20 hours a month. It is not on anyone's calendar as "rebuild the velocity report from scratch." It is just what Monday morning costs.
 
 Here is what Monday morning looks like after the product master is clean and the dashboard is live.
 
-The ops manager opens one screen fifteen minutes before the meeting. All six retailers. Velocity by SKU, filterable by retailer and product line. She clicks into Cranberry Mostarda at Costco. The velocity chart shows the 15% drop started three weeks ago. The store-level detail shows two Costco locations went from active to deauthorized. The deauthorization reason links to the product master: barcode validation failure. She opens the triage table, sees the fix is 10 minutes, and schedules it for that afternoon.
+The ops manager opens one screen fifteen minutes before the meeting. All six retailers. Velocity by SKU, filterable by retailer and product line. She clicks into Cranberry Mostarda at the club retailer. The velocity chart shows the 15% drop started three weeks ago. The store-level detail shows two of its locations went from active to deauthorized. The deauthorization reason links to the product master: barcode validation failure. She opens the triage table, sees the fix is 10 minutes, and schedules it for that afternoon.
 
-The CEO asks about Cranberry Mostarda. The ops manager already knows the answer. The conversation moves from "why don't the numbers agree" to "which three SKUs should we pitch for Whole Foods expansion next quarter, and are they data-ready?"
+The CEO asks about Cranberry Mostarda. The ops manager already knows the answer. The conversation moves from "why don't the numbers agree" to "which three SKUs should we pitch for expansion at the natural grocer next quarter, and are they data-ready?"
 
 The 90 minutes are not optimized. They are gone. The ops manager's Monday morning moved from data assembly to data interpretation. The difference is not a better spreadsheet. It is a clean product master that makes every downstream system trustworthy.
 

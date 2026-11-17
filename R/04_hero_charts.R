@@ -196,7 +196,7 @@ save_chart(p2, "02_time_to_shelf", h = 5.5)
 
 cat("\n[3/4] True net margin by retailer (small multiples)\n")
 
-contracted <- c("Walmart", "Whole Foods", "Costco")
+contracted <- c("National mass retailer", "Natural grocer", "Club retailer")
 
 c3_pnl <- retailer_pnl |>
   filter(retailer %in% contracted) |>
@@ -222,7 +222,7 @@ p3 <- ggplot(c3_long, aes(x = value, y = fct_rev(retailer))) +
             hjust = -0.05, color = LL_INK, fontface = "bold", size = 3.4) +
   facet_wrap(~ component, ncol = 1, scales = "free_x") +
   scale_x_continuous(expand = expansion(mult = c(0, 0.20))) +
-  labs(title    = wrap_title("Walmart wins on dollars; Whole Foods wins on margin"),
+  labs(title    = wrap_title("The national mass retailer wins on dollars; the natural grocer wins on margin"),
        subtitle = "Each metric on its own scale so all bars are readable",
        x        = NULL,
        y        = NULL,
