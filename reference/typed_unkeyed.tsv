@@ -1,0 +1,14 @@
+# Typed figures this repo prints with no canon key (owner, 2026-11-15; plan U19, U22).
+# One row per figure per location. The platform's fleet check holds the row count to a ceiling that only
+# falls: give a figure a key (or stop printing it) and delete its row. listed=yes: the read map names it, and
+# U19 owes its key; listed=no: U22 works it down. Generated from the 2026-11-15 manifest pass.
+file_line	printed	exact_value	meaning	source	kind	listed
+README.md:13	$92,617 a year		annualized retailer chargebacks traced to product-data defects	prose only; computed by R pipeline R/02_build_frames.R over warehouse via R/01_load_raw.R:42-56 (frames not committed) (:297, :435 chargeback_total x12/n_months)	prose-only	yes
+README.md:56	1.3M scan data rows	1323569	scan_data row count	prose only; canon data_windows.scan_data rows 1323569	prose-only	no
+README.md:66	~24% of SKUs		SKUs with invalid GTIN-14 check digits	prose only (data generation parameter)	prose-only	no
+README.md:67	worst-quality 10% of SKUs carry 49% of chargeback dollars	49	chargeback concentration in worst-quality decile	prose only	prose-only	no
+README.md:68	case dimensions 10–18%, weights 6%, country of origin 2%		field missingness rates	prose only (data generation parameters)	prose-only	no
+README.md:7	50 SKUs, 5 product lines, and 6 contracted retailers	50	universe counts	prose only; canon universe.*	prose-only	no
+index.html:218	$92,617		annual retailer chargebacks traced to product-data defects	prose only; R pipeline R/02_build_frames.R over warehouse via R/01_load_raw.R:42-56 (frames not committed)	prose-only	yes
+index.html:222	15 hours	15	data-entry fix hours to clear the data side	prose only; R/02_build_frames.R:432 est_fix_hours	prose-only	no
+index.html:232	$52,097 a year		fulfillment penalties on the same defective SKUs	prose only; R pipeline R/02_build_frames.R over warehouse via R/01_load_raw.R:42-56 (frames not committed)	prose-only	yes
