@@ -159,7 +159,7 @@ reactable(
   columns = list(
     SKU      = colDef(minWidth = 100, class = "col-sku", headerClass = "col-sku"),
     Product  = colDef(minWidth = 220),
-    Retailer = colDef(minWidth = 110, filterInput = function(values, name) {
+    Retailer = colDef(minWidth = 185, filterInput = function(values, name) {
       tags$select(
         onchange = sprintf(
           "Reactable.setFilter('velocity-table', '%s', event.target.value || undefined)",
@@ -327,7 +327,7 @@ reactable(
                        color      = "#ffffff")
   ),
   columns = list(
-    Retailer = colDef(minWidth = 130, style = list(fontWeight = "600")),
+    Retailer = colDef(minWidth = 185, style = list(fontWeight = "600")),
     `Gross revenue`    = colDef(minWidth = 130, align = "right",
                                 cell = function(v) dollar_cell(v)),
     `Trade spend`      = colDef(minWidth = 120, align = "right",
